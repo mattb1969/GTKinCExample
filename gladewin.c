@@ -29,7 +29,7 @@ int main(int argc, char *argv[])
     gtk_init(&argc, &argv);
 
     builder = gtk_builder_new();
-    gtk_builder_add_from_file (builder, "glade/main.glade", &err);
+    gtk_builder_add_from_file (builder, "gui_files/main.glade", &err);
 	
 	if (err != NULL) {
         fprintf (stderr, "Unable to read file: %s\n", err->message);

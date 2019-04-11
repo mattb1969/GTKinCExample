@@ -16,41 +16,48 @@ GTKLIB =`pkg-config --cflags --libs gtk+-3.0`
 PTHREAD=-pthread
 
 # Define the target directories.
-TARGETDIR_gladewin=.
+TARGETDIR=.
 
 
-all: $(TARGETDIR_gladewin)/gladewin
+all: $(TARGETDIR)/gladewin $(TARGETDIR)/stacks
 
 ## Target: gladewin
 OBJS_gladewin =  \
-	$(TARGETDIR_gladewin)/main.o
-USERLIBS_gladewin =   
-DEPLIBS_gladewin =  
-LDLIBS_gladewin = $(PTHREAD) $(GTKLIB) -export-dynamic
+	$(TARGETDIR)/gladewin.o
+OBJS_stacks = $(TARGETDIR)/stacks.o
+USERLIBS =   
+DEPLIBS =  
+LDLIBS = $(PTHREAD) $(GTKLIB) -export-dynamic
 
 
 # Link or archive
-$(TARGETDIR_gladewin)/gladewin: $(TARGETDIR_gladewin) $(OBJS_gladewin) $(DEPLIBS_gladewin)
-	$(LINK.c) $(CFLAGS_gladewin) -o $@ $(OBJS_gladewin) $(LDLIBS_gladewin)
+$(TARGETDIR)/gladewin: $(TARGETDIR) $(OBJS_gladewin) $(DEPLIBS)
+	$(LINK.c) $(CFLAGS) -o $@ $(OBJS_gladwin) $(LDLIBS)
 
+$(TARGETDIR)/stacks: $(TARGETDIR) $(OBJS_stacks) $(DEPLIBS)
+	$(LINK.c) $(CFLAGS) -o $@ $(OBJS_stacks) $(LDLIBS)
 
 # Compile source files into .o files
-$(TARGETDIR_gladewin)/main.o: $(TARGETDIR_gladewin) main.c
-	$(COMPILE.c) $(CFLAGS_gladewin) $(GTKLIB) -o $@ main.c
+$(TARGETDIR)/gladewin.o: $(TARGETDIR) gladewin.c
+	$(COMPILE.c) $(CFLAGS) $(GTKLIB) -o $@ gladewin.c
 
+$(TARGETDIR)/stacks.o: $(TARGETDIR) stacks.c
+	$(COMPILE.c) $(CFLAGS) $(GTKLIB) -o $@ stacks.c
 
 
 #### Clean target deletes all generated files ####
 clean:
 	rm -f \
-		$(TARGETDIR_gladewin)/gladewin \
-		$(TARGETDIR_gladewin)/main.o
-	rm -f -r $(TARGETDIR_gladewin)
+		$(TARGETDIR)/gladewin \
+		$(TARGETDIR)/gladewin.o \
+		$(TARGETDIR)/stacks \
+		$(TARGETDIR)/stacks.o
+	rm -f -r $(TARGETDIR)
 
 
 # Create the target directory (if needed)
-$(TARGETDIR_gladewin):
-	mkdir -p $(TARGETDIR_gladewin)
+$(TARGETDIR):
+	mkdir -p $(TARGETDIR)
 
 
 # Enable dependency checking
