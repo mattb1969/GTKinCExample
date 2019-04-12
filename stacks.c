@@ -79,7 +79,10 @@ int main(int argc, char** argv) {
 // called when window is closed
 void on_window_main_destroy()
 {
+    printf("In on window main destroy\n");
     gtk_main_quit();
+    
+    exit(0);
 }
 
 // called when the button is pressed
@@ -87,10 +90,12 @@ void on_window_main_destroy()
 // the second parameter is the user data passed back from the signal handler that was defined above
 void on_btn_update_text_pg1_clicked(GtkButton *button, app_widgets *app_wdgts)
 {
-	gchar		*lbl_data = "";			// holder for the data being viewed / edited
+	const gchar		*lbl_data;			// holder for the data being viewed / edited
 	
+	printf("Button has been clicked!\n");
 	// get the value from page 1 text field
 	lbl_data = gtk_entry_get_text(GTK_ENTRY(app_wdgts->w_txt_enter_data_pg1));
+	printf("label data retreived:%s\n", lbl_data);
 	// populate the page 0 label with the new value
 	gtk_label_set_text(GTK_LABEL(app_wdgts->w_lbl_box_view_data), lbl_data);
 }
