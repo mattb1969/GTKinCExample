@@ -24,7 +24,8 @@ all: $(TARGETDIR)/gladewin $(TARGETDIR)/stacks
 ## Target: gladewin
 OBJS_gladewin =  \
 	$(TARGETDIR)/gladewin.o
-OBJS_stacks = $(TARGETDIR)/stacks.o
+OBJS_stacks = \
+	$(TARGETDIR)/stacks.o
 USERLIBS =   
 DEPLIBS =  
 LDLIBS = $(PTHREAD) $(GTKLIB) -export-dynamic
@@ -32,7 +33,7 @@ LDLIBS = $(PTHREAD) $(GTKLIB) -export-dynamic
 
 # Link or archive
 $(TARGETDIR)/gladewin: $(TARGETDIR) $(OBJS_gladewin) $(DEPLIBS)
-	$(LINK.c) $(CFLAGS) -o $@ $(OBJS_gladwin) $(LDLIBS)
+	$(LINK.c) $(CFLAGS) -o $@ $(OBJS_gladewin) $(LDLIBS)
 
 $(TARGETDIR)/stacks: $(TARGETDIR) $(OBJS_stacks) $(DEPLIBS)
 	$(LINK.c) $(CFLAGS) -o $@ $(OBJS_stacks) $(LDLIBS)
