@@ -19,13 +19,15 @@ PTHREAD=-pthread
 TARGETDIR=.
 
 
-all: $(TARGETDIR)/gladewin $(TARGETDIR)/stacks
+all: $(TARGETDIR)/gladewin $(TARGETDIR)/stacks $(TARGETDIR)/textView
 
 ## Target: gladewin
 OBJS_gladewin =  \
 	$(TARGETDIR)/gladewin.o
 OBJS_stacks = \
 	$(TARGETDIR)/stacks.o
+OBJS_textView = \
+	$(TARGETDIR)/textView.o
 USERLIBS =   
 DEPLIBS =  
 LDLIBS = $(PTHREAD) $(GTKLIB) -export-dynamic
@@ -38,6 +40,9 @@ $(TARGETDIR)/gladewin: $(TARGETDIR) $(OBJS_gladewin) $(DEPLIBS)
 $(TARGETDIR)/stacks: $(TARGETDIR) $(OBJS_stacks) $(DEPLIBS)
 	$(LINK.c) $(CFLAGS) -o $@ $(OBJS_stacks) $(LDLIBS)
 
+$(TARGETDIR)/textView: $(TARGETDIR) $(OBJS_textView) $(DEPLIBS)
+	$(LINK.c) $(CFLAGS) -o $@ $(OBJS_textView) $(LDLIBS)
+	
 # Compile source files into .o files
 $(TARGETDIR)/gladewin.o: $(TARGETDIR) gladewin.c
 	$(COMPILE.c) $(CFLAGS) $(GTKLIB) -o $@ gladewin.c
@@ -45,6 +50,8 @@ $(TARGETDIR)/gladewin.o: $(TARGETDIR) gladewin.c
 $(TARGETDIR)/stacks.o: $(TARGETDIR) stacks.c
 	$(COMPILE.c) $(CFLAGS) $(GTKLIB) -o $@ stacks.c
 
+$(TARGETDIR)/textView.o: $(TARGETDIR) textView.c
+	$(COMPILE.c) $(CFLAGS) $(GTKLIB) -o $@ textView.c
 
 #### Clean target deletes all generated files ####
 clean:
@@ -53,6 +60,9 @@ clean:
 		$(TARGETDIR)/gladewin.o \
 		$(TARGETDIR)/stacks \
 		$(TARGETDIR)/stacks.o
+		$(TARGETDIR)/textView \
+		$(TARGETDIR)/textView.o
+	
 	rm -f -r $(TARGETDIR)
 
 
