@@ -19,7 +19,7 @@ PTHREAD=-pthread
 TARGETDIR=.
 
 
-all: $(TARGETDIR)/gladewin $(TARGETDIR)/stacks $(TARGETDIR)/textView
+all: $(TARGETDIR)/gladewin $(TARGETDIR)/stacks $(TARGETDIR)/textView $(TARGETDIR)/textViewGlade
 
 ## Target: gladewin
 OBJS_gladewin =  \

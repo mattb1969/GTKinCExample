@@ -41,18 +41,20 @@ typedef struct AppState {
 
 void on_open_button ( GtkWidget *button , AppState *app_state ); 
 void on_print_button ( GtkWidget *button , AppState *app_state );
+void on_window_main_destroy();
 
 /*****************************************************************************
  Main program
 *****************************************************************************/
 
+//bug: clicking on X doesn't close it
+//bug: clicking on opne file doesn't work, I suspect print terminal is the same.
+
 int main(int argc, char *argv[]) {
 	
 	GtkBuilder  *builder;
-	GtkWidget	*scrolled_window ; 
-	GtkWidget	*vbox;
-	GtkWidget	*hbox;
 	AppState	app_state ;
+	GError		*err = NULL;	// holds any error that occurs within GTK
 
 	gtk_init (&argc , &argv );
 	
@@ -116,6 +118,8 @@ void on_open_button ( GtkWidget *button , AppState *app_state){
 	GError			*error = NULL;
 	guint			nBytesInBuf ;
 	gchar			*contents ;
+	
+	printf("on open button triggered\n");
 
 	//dialog = gtk_file_chooser_dialog_new ("Select File ..." , 
 	//										GTK_WINDOW (app_state->window),
@@ -187,6 +191,9 @@ void on_open_button ( GtkWidget *button , AppState *app_state){
 *****************************************************************************/
 
 void on_print_button ( GtkWidget *button , AppState *app_state) {
+
+	printf("on print button triggered\n");
+
 	
 	GtkTextIter start ; 
 	GtkTextIter end ;
@@ -203,4 +210,14 @@ void on_print_button ( GtkWidget *button , AppState *app_state) {
 		g_free (text);
 	}
 }
-	
+
+/*****************************************************************************
+ on_window closure
+*****************************************************************************/
+void on_window_main_destroy()
+{
+    printf("In on window main destroy\n");
+    gtk_main_quit();
+    
+    exit(0);
+}
