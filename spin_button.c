@@ -2,16 +2,18 @@
 
 typedef struct {
     GtkWidget *w_lbl_quantity;
-    GtkWidget *w_sbtn_quantity;
+    //GtkWidget *w_sbtn_quantity;
+    GtkSpinButton *w_sbtn_quantity;
 } app_widgets;
 
 
-void on_btn_update_clicked(GtkButton *button, app_widgets *app_wdgts)
+void on_btn_update_clicked(GtkSpinButton *button, app_widgets *app_wdgts)
 {
     guint32 quantity = 0; // stores integer read from spin button widget
     gchar out_str[100] = {0}; // buffer for string
  
-    quantity = gtk_spin_button_get_value_as_int(GTK_SPIN_BUTTON(app_wdgts->w_sbtn_quantity));
+    quantity = gtk_spin_button_get_value_as_int(GTK_SPIN_BUTTON(app_wdgts->w_sbtn_quantity));       //original
+    //quantity = gtk_spin_button_get_value_as_int(button);      //didn't work
     g_snprintf(out_str, sizeof(out_str), "%d", quantity);
     gtk_label_set_text(GTK_LABEL(app_wdgts->w_lbl_quantity), out_str);
 }
@@ -37,7 +39,8 @@ int main(int argc, char *argv[])
  
     // get pointers to widgets
     widgets->w_lbl_quantity = GTK_WIDGET(gtk_builder_get_object(builder, "lbl_quantity"));
-    widgets->w_sbtn_quantity = GTK_WIDGET(gtk_builder_get_object(builder, "sbtn_quantity"));
+    //widgets->w_sbtn_quantity = GTK_WIDGET(gtk_builder_get_object(builder, "sbtn_quantity"));
+    widgets->w_sbtn_quantity = GTK_SPIN_BUTTON(gtk_builder_get_object(builder, "sbtn_quantity"));
  
     gtk_builder_connect_signals(builder, widgets);
 

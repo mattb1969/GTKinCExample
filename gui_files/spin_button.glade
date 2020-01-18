@@ -79,7 +79,7 @@
                 <property name="orientation">vertical</property>
                 <property name="homogeneous">True</property>
                 <child>
-                  <object class="GtkSpinButton">
+                  <object class="GtkSpinButton" id="sbtn_quantity">
                     <property name="visible">True</property>
                     <property name="can_focus">True</property>
                     <property name="max_length">5</property>
