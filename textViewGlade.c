@@ -47,8 +47,8 @@ void on_window_main_destroy();
  Main program
 *****************************************************************************/
 
-//bug: clicking on X doesn't close it
-//bug: clicking on opne file doesn't work, I suspect print terminal is the same.
+//Bug: clicking on X doesn't close it
+//Bug: clicking on one file doesn't work, I suspect print terminal is the same.
 
 int main(int argc, char *argv[]) {
 	
@@ -68,8 +68,8 @@ int main(int argc, char *argv[]) {
         g_error_free(err);
         return 1;
     }
-	
-	//	vbox is the upper half of the grid with the text_view in it	
+
+	// window is the main window
 	app_state.window = GTK_WIDGET(gtk_builder_get_object(builder, "win_main_window"));
 
 	
@@ -77,21 +77,12 @@ int main(int argc, char *argv[]) {
 	app_state.text_view = GTK_WIDGET(gtk_builder_get_object(builder, "txt_text_view"));
 	
 	/* Create the open and print buttons, pack them into the hbox, and attach to their callbacks .*/
-	// todo: get the pointer to the buttons
 	app_state.open_button = GTK_WIDGET(gtk_builder_get_object(builder, "but_open_file"));
 	
-	// todo: Not sure how i did this first time around, with the pointer!
-	//g_signal_connect (G_OBJECT (app_state.open_button), "clicked",
-	//					G_CALLBACK (on_open_button), &app_state ) ;
 	gtk_builder_connect_signals(builder, &app_state);
 
 	app_state.print_button = GTK_WIDGET(gtk_builder_get_object(builder, "but_print_to_terminal"));
-	// todo: Not sure how i did this first time around, with the pointer
-	//g_signal_connect (G_OBJECT (app_state.print_button), "clicked",
-	//					G_CALLBACK (on_print_button), &app_state ) ;
 
-	// todo: this might need to be done via glade, set the states.
-	// todo: i think these remain as setting initial state.
 	gtk_widget_set_sensitive(app_state.open_button, TRUE); 
 	gtk_widget_set_sensitive(app_state.print_button , FALSE); 
 	gtk_widget_show_all ( app_state.window ) ;
@@ -121,12 +112,6 @@ void on_open_button ( GtkWidget *button , AppState *app_state){
 	
 	printf("on open button triggered\n");
 
-	//dialog = gtk_file_chooser_dialog_new ("Select File ..." , 
-	//										GTK_WINDOW (app_state->window),
-	//										GTK_FILE_CHOOSER_ACTION_OPEN, 
-	//										GTK_STOCK_OK, GTK_RESPONSE_ACCEPT, 
-	//										GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL, NULL);
-
 	dialog = gtk_file_chooser_dialog_new ("Select File ..." , 
 											GTK_WINDOW (app_state->window),
 											GTK_FILE_CHOOSER_ACTION_OPEN, 
@@ -135,7 +120,6 @@ void on_open_button ( GtkWidget *button , AppState *app_state){
 											NULL);	
 	filter = gtk_file_filter_new ();
 	gtk_file_filter_set_name( filter , "Text Files "); 
-	//gtk_file_filter_add_mime_type( filter , "text /*");
 	gtk_file_filter_add_pattern (filter, "*.*");
 	gtk_file_chooser_add_filter(GTK_FILE_CHOOSER(dialog), filter); 
 	gtk_file_chooser_set_current_folder (GTK_FILE_CHOOSER ( dialog ) ,g_get_home_dir ( ) ) ;
