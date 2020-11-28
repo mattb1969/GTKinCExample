@@ -19,7 +19,7 @@ PTHREAD=-pthread
 TARGETDIR=.
 
 
-all: $(TARGETDIR)/gladewin $(TARGETDIR)/stacks $(TARGETDIR)/textView $(TARGETDIR)/textViewGlade
+all: $(TARGETDIR)/gladewin $(TARGETDIR)/stacks $(TARGETDIR)/textView $(TARGETDIR)/textViewGlade $(TARGETDIR)/spinButtonGlade
 
 ## Target: gladewin
 OBJS_gladewin =  \
@@ -30,6 +30,8 @@ OBJS_textView = \
 	$(TARGETDIR)/textView.o
 OBJS_textViewGlade = \
 	$(TARGETDIR)/textViewGlade.o
+OBJS_spinButtonGlade = \
+	$(TARGETDIR)/spinButtonGlade.o
 USERLIBS =   
 DEPLIBS =  
 LDLIBS = $(PTHREAD) $(GTKLIB) -export-dynamic
@@ -48,6 +50,9 @@ $(TARGETDIR)/textView: $(TARGETDIR) $(OBJS_textView) $(DEPLIBS)
 $(TARGETDIR)/textViewGlade: $(TARGETDIR) $(OBJS_textViewGlade) $(DEPLIBS)
 	$(LINK.c) $(CFLAGS) -o $@ $(OBJS_textViewGlade) $(LDLIBS)
 	
+$(TARGETDIR)/spinButtonGlade: $(TARGETDIR) $(OBJS_spinButtonGlade) $(DEPLIBS)
+	$(LINK.c) $(CFLAGS) -o $@ $(OBJS_spinButtonGlade) $(LDLIBS)
+		
 # Compile source files into .o files
 $(TARGETDIR)/gladewin.o: $(TARGETDIR) gladewin.c
 	$(COMPILE.c) $(CFLAGS) $(GTKLIB) -o $@ gladewin.c
@@ -60,6 +65,9 @@ $(TARGETDIR)/textView.o: $(TARGETDIR) textView.c
 
 $(TARGETDIR)/textViewGlade.o: $(TARGETDIR) textViewGlade.c
 	$(COMPILE.c) $(CFLAGS) $(GTKLIB) -o $@ textViewGlade.c
+
+$(TARGETDIR)/spinButtonGlade.o: $(TARGETDIR) spin_button.c
+	$(COMPILE.c) $(CFLAGS) $(GTKLIB) -o $@ spin_button.c	
 	
 #### Clean target deletes all generated files ####
 clean:
@@ -71,7 +79,9 @@ clean:
 		$(TARGETDIR)/textView \
 		$(TARGETDIR)/textView.o \
 		$(TARGETDIR)/textViewGlade \
-		$(TARGETDIR)/textViewGlade.o	
+		$(TARGETDIR)/textViewGlade.o
+		$(TARGETDIR)/spinButtonGlade \
+		$(TARGETDIR)/spinButtonGlade.o	
 	rm -f -r $(TARGETDIR)
 
 
